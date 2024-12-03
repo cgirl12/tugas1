@@ -1,209 +1,150 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 
-class MovieListPage extends StatefulWidget {
-  const MovieListPage({super.key});
+class CalculatorPage extends StatefulWidget {
+  const CalculatorPage({super.key});
 
   @override
-  State<MovieListPage> createState() => _MovieListPageState();
+  State<CalculatorPage> createState() => _CalculatorPageState();
 }
 
-class _MovieListPageState extends State<MovieListPage> {
-  List<Map<String, dynamic>> movies = [];
-  File? selectedImage;
+class _CalculatorPageState extends State<CalculatorPage> {
+  String input = '';
+  String result = '0';
+  String operator = '';
+  double num1 = 0;
+  double num2 = 0;
 
-  void _addMovie(String title) {
+  void buttonPressed(String value) {
     setState(() {
-      movies.add({'title': title, 'image': selectedImage});
-      selectedImage = null; // Reset gambar setelah menambahkan
+      if (value == 'C') {
+        input = '';
+        result = '0';
+        num1 = 0;
+        num2 = 0;
+        operator = '';
+      } else if (value == '=' && operator.isNotEmpty) {
+        num2 = double.parse(input);
+        if (operator == '+') result = (num1 + num2).toString();
+        if (operator == '-') result = (num1 - num2).toString();
+        if (operator == '×') result = (num1 * num2).toString();
+        if (operator == '÷' && num2 != 0) result = (num1 / num2).toString();
+        input = '';
+        operator = '';
+      } else if ('+−×÷'.contains(value)) {
+        num1 = double.parse(input);
+        operator = value;
+        input = '';
+      } else {
+        input += value;
+        result = input;
+      }
     });
   }
 
-  Future<void> _pickImage(ImageSource source) async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: source);
-    if (image != null) {
-      setState(() {
-        selectedImage = File(image.path);
-      });
-    }
-  }
-
-  void _showAddMovieDialog() {
-    final TextEditingController titleController = TextEditingController();
-
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (BuildContext context) {
-        return Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-            top: 16,
-            left: 16,
-            right: 16,
+  Widget calculatorButton(String label,
+      {Color bgColor = Colors.white, Color textColor = Colors.black}) {
+    return GestureDetector(
+      onTap: () => buttonPressed(label),
+      child: Container(
+        margin: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 4,
+              offset: Offset(2, 2),
+            ),
+          ],
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: textColor,
           ),
-          child: StatefulBuilder(
-            builder: (BuildContext context, StateSetter setModalState) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextField(
-                    controller: titleController,
-                    decoration: const InputDecoration(labelText: 'Movie Title'),
-                  ),
-                  const SizedBox(height: 10),
-                  selectedImage != null
-                      ? Image.file(
-                          selectedImage!,
-                          height: 150,
-                          fit: BoxFit.cover,
-                        )
-                      : const SizedBox(),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton.icon(
-                        onPressed: () async {
-                          await _pickImage(ImageSource.camera);
-                          setModalState(() {});
-                        },
-                        icon: const Icon(Icons.camera_alt),
-                        label: const Text('Kamera'),
-                      ),
-                      const SizedBox(width: 10),
-                      ElevatedButton.icon(
-                        onPressed: () async {
-                          await _pickImage(ImageSource.gallery);
-                          setModalState(() {});
-                        },
-                        icon: const Icon(Icons.photo_library),
-                        label: const Text('Galeri'),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (titleController.text.isNotEmpty) {
-                        _addMovie(titleController.text);
-                        Navigator.pop(context);
-                      }
-                    },
-                    child: const Text('Tambahkan Movie'),
-                  ),
-                ],
-              );
-            },
-          ),
-        );
-      },
+        ),
+      ),
     );
-  }
-
-  void _deleteMovie(int index) {
-    setState(() {
-      movies.removeAt(index);
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.yellow, Colors.lime],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-          child: AppBar(
-            iconTheme: const IconThemeData(color: Colors.black),
-            backgroundColor:
-                Colors.transparent, // Transparent untuk menunjukkan gradient
-            elevation: 0, // Menghapus shadow
-            centerTitle: true,
-            title: const Text(
-              'Movie List',
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
+        child: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          centerTitle: true,
+          title: const Text(
+            'Kalkulator',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0), // Padding di luar GridView
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, // Membuat 2 kolom
-            crossAxisSpacing: 10, // Spasi antar kolom
-            mainAxisSpacing: 10, // Spasi antar baris
-            childAspectRatio: 0.7, // Rasio ukuran card (lebar vs tinggi)
-          ),
-          itemCount: movies.length,
-          itemBuilder: (context, index) {
-            final movie = movies[index];
-            return Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+      body: Column(
+        children: [
+          // Display
+          Expanded(
+            flex: 2,
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(20),
+              alignment: Alignment.bottomRight,
+              color: Colors.white,
+              child: Text(
+                result,
+                style: const TextStyle(
+                  fontSize: 48,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+          ),
+          // Buttons
+          Expanded(
+            flex: 5,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              child: GridView.count(
+                crossAxisCount: 4,
                 children: [
-                  movie['image'] != null
-                      ? ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
-                          ),
-                          child: Image.file(
-                            movie['image'],
-                            width: double.infinity,
-                            height: 150,
-                            fit: BoxFit.cover,
-                          ),
-                        )
-                      : const Icon(Icons.movie, size: 100),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Text(
-                      movie['title'],
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const Spacer(),
-                  TextButton(
-                    onPressed: () => _deleteMovie(index),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Hapus',
-                        ),
-                      ],
-                    ),
-                  ),
+                  calculatorButton('C',
+                      bgColor: Colors.red, textColor: Colors.white),
+                  calculatorButton('÷',
+                      bgColor: Colors.blue, textColor: Colors.white),
+                  calculatorButton('×',
+                      bgColor: Colors.blue, textColor: Colors.white),
+                  calculatorButton('−',
+                      bgColor: Colors.blue, textColor: Colors.white),
+                  calculatorButton('7'),
+                  calculatorButton('8'),
+                  calculatorButton('9'),
+                  calculatorButton('+',
+                      bgColor: Colors.blue, textColor: Colors.white),
+                  calculatorButton('4'),
+                  calculatorButton('5'),
+                  calculatorButton('6'),
+                  calculatorButton('=',
+                      bgColor: Colors.green, textColor: Colors.white),
+                  calculatorButton('1'),
+                  calculatorButton('2'),
+                  calculatorButton('3'),
+                  calculatorButton('0', bgColor: Colors.grey[300]!),
                 ],
               ),
-            );
-          },
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showAddMovieDialog,
-        child: const Icon(Icons.add),
+            ),
+          ),
+        ],
       ),
     );
   }

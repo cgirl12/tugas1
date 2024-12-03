@@ -32,13 +32,7 @@ class MyApp extends StatelessWidget {
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.yellow, Colors.lime],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
+              decoration: const BoxDecoration(),
               child: AppBar(
                 iconTheme: const IconThemeData(color: Colors.black),
                 backgroundColor: Colors
@@ -48,7 +42,7 @@ class MyApp extends StatelessWidget {
                 title: const Text(
                   'Portfolio',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 24,
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
@@ -62,17 +56,17 @@ class MyApp extends StatelessWidget {
               children: [
                 UserAccountsDrawerHeader(
                   accountName: const Text(
-                    'Melda Olivia Lesbatta',
+                    'Ruth Azaria Ubro',
                     style: TextStyle(color: Colors.black),
                   ),
-                  accountEmail: const Text('meldaoliv31@gmail.com',
+                  accountEmail: const Text('ruthazaria21@gmail.com',
                       style: TextStyle(color: Colors.black)),
                   currentAccountPicture: CircleAvatar(
                     backgroundColor: Colors.white,
                     child: ClipOval(
                       child: Image.asset(
                         fit: BoxFit.cover,
-                        'assets/logo.jpeg',
+                        'assets/aza.jpg',
                         width: 90,
                       ),
                     ),
@@ -82,36 +76,36 @@ class MyApp extends StatelessWidget {
                       image: DecorationImage(
                           fit: BoxFit.cover,
                           image: NetworkImage(
-                              'https://img.freepik.com/free-photo/hand-painted-watercolor-background-with-sky-clouds-shape_24972-1095.jpg'))),
+                              'https://img.freepik.com/free-photo/psychedelic-paper-shapes-with-copy-space_23-2149378246.jpg?'))),
                 ),
                 ListTile(
                   leading: const Icon(
                     Icons.account_box,
-                    color: Colors.blue,
+                    color: Colors.purple,
                   ),
-                  title: const Text('About'),
+                  title: const Text('Portfolio'),
                   onTap: () {
                     Navigator.pop(context);
                   },
                 ),
                 ListTile(
                   leading: const Icon(
-                    Icons.movie,
-                    color: Colors.blue,
+                    Icons.calculate,
+                    color: Colors.purple,
                   ),
-                  title: const Text('Movie List'),
+                  title: const Text('Kalkulator'),
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const MovieListPage()),
+                          builder: (context) => const CalculatorPage()),
                     );
                   },
                 ),
                 ListTile(
                   leading: const Icon(
                     FontAwesomeIcons.whatsapp,
-                    color: Colors.blue,
+                    color: Colors.purple,
                   ),
                   title: const Text('WhatsApp'),
                   onTap: () async {
@@ -126,10 +120,8 @@ class MyApp extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(
-                    FontAwesomeIcons.instagram,
-                    color: Colors.blue,
-                  ),
+                  leading: const Icon(FontAwesomeIcons.instagram,
+                      color: Colors.purple),
                   title: const Text('Instagram'),
                   onTap: () async {
                     final Uri url = Uri.parse(
@@ -209,39 +201,37 @@ class MyApp extends StatelessWidget {
                           // Profile Avatar
                           Container(
                             decoration: const BoxDecoration(
-                              shape: BoxShape
-                                  .circle, // Membuat outline berbentuk lingkaran
+                              shape: BoxShape.circle,
                               gradient: LinearGradient(
                                 colors: [
-                                  Color(0xFFF58529), // Warna gradasi Instagram
-                                  Color(0xFFDD2A7B),
-                                  Color(0xFF8134AF),
-                                  Color(0xFF515BD4),
+                                  Color(0xFF8134AF), // Ungu dengan hex
+                                  Colors.purple, // Ungu bawaan Flutter
                                 ],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                               ),
                             ),
+
                             padding:
                                 const EdgeInsets.all(4), // Ketebalan outline
                             child: const CircleAvatar(
                               radius: 100, // Ukuran lingkaran avatar
-                              backgroundImage: AssetImage('assets/melda.jpg'),
+                              backgroundImage: AssetImage('assets/aza.jpg'),
                             ),
                           ),
                           const SizedBox(height: 25),
                           const Text(
-                            'Melda Olivia',
+                            'Ruth Azaria Ubro',
                             style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFF303F9F), // Warna indigo 700
+                              color: Color(0xFF8134AF), // Warna indigo 700
                             ),
                           ),
 
                           const SizedBox(height: 10),
                           const Text(
-                            'Student',
+                            'Mahasiswa',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -267,64 +257,8 @@ class MyApp extends StatelessWidget {
                                     padding: const EdgeInsets.only(
                                       top: 25, // Padding atas
                                       bottom: 5, // Padding bawah
-                                      left: 30, // Padding kiri
-                                      right: 30, // Padding kanan
-                                    ), // Ruang di sekitar konten
-                                    // ignore: prefer_const_constructors
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize
-                                          .min, // Sesuaikan ukuran dengan konten
-                                      children: const [
-                                        // Ikon
-                                        Icon(
-                                          Icons.school,
-                                          size: 40,
-                                          color: Color(0xFF2196F3), // Ikon biru
-                                        ),
-                                        SizedBox(
-                                            height:
-                                                10), // Jarak antara ikon dan teks
-                                        // Teks "Experience"
-                                        Text(
-                                          'Semester',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                            height:
-                                                5), // Jarak antara teks judul dan deskripsi
-                                        // Teks "3+ Years"
-                                        Text(
-                                          '5th',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              // Project
-                              Column(
-                                children: [
-                                  // Ikon dengan latar belakang lingkaran
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: const Color(
-                                          0xFFFFF9C4), // Warna kuning muda
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-
-                                    padding: const EdgeInsets.only(
-                                      top: 25, // Padding atas
-                                      bottom: 5, // Padding bawah
-                                      left: 32, // Padding kiri
-                                      right: 32, // Padding kanan
+                                      left: 25, // Padding kiri
+                                      right: 25, // Padding kanan
                                     ), // Ruang di sekitar konten
                                     // ignore: prefer_const_constructors
                                     child: Column(
@@ -335,14 +269,14 @@ class MyApp extends StatelessWidget {
                                         Icon(
                                           Icons.work,
                                           size: 40,
-                                          color: Colors.yellow, // Ikon ungu
+                                          color: Color(0xFF2196F3), // Ikon biru
                                         ),
                                         SizedBox(
                                             height:
                                                 10), // Jarak antara ikon dan teks
                                         // Teks "Experience"
                                         Text(
-                                          'Experience',
+                                          'Pengalaman',
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -364,82 +298,107 @@ class MyApp extends StatelessWidget {
                                   ),
                                 ],
                               ),
+
+                              // Project
+                              Column(
+                                children: [
+                                  // Ikon dengan latar belakang lingkaran
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(255, 236, 205,
+                                          241), // Warna kuning muda
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+
+                                    padding: const EdgeInsets.only(
+                                      top: 25, // Padding atas
+                                      bottom: 5, // Padding bawah
+                                      left: 45, // Padding kiri
+                                      right: 45, // Padding kanan
+                                    ), // Ruang di sekitar konten
+                                    // ignore: prefer_const_constructors
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize
+                                          .min, // Sesuaikan ukuran dengan konten
+                                      children: const [
+                                        // Ikon
+                                        Icon(
+                                          Icons.code,
+                                          size: 40,
+                                          color: Colors.purple, // Ikon ungu
+                                        ),
+                                        SizedBox(
+                                            height:
+                                                10), // Jarak antara ikon dan teks
+                                        // Teks "Experience"
+                                        Text(
+                                          'Projek',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                            height:
+                                                5), // Jarak antara teks judul dan deskripsi
+                                        // Teks "3+ Years"
+                                        Text(
+                                          '5',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
-                          const Column(
-                            children: [
-                              // Alamat
-                              ListTile(
-                                leading: Icon(
-                                  Icons.home,
-                                  color: Colors.blue,
-                                  size: 30,
-                                ),
-                                title: Text(
-                                  'Alamat',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                subtitle: Text('Wainitu'),
-                              ),
-                              Divider(), // Garis pemisah
-
-                              // Kampus
-                              ListTile(
-                                leading: Icon(
+                          const Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment
+                                  .center, // Menempatkan elemen di tengah
+                              children: [
+                                Icon(
                                   Icons.school,
                                   color: Colors.green,
-                                  size: 30,
+                                  size: 40,
                                 ),
-                                title: Text(
-                                  'Kampus',
+                                SizedBox(
+                                    height:
+                                        10), // Memberi jarak antara ikon dan teks
+                                Text(
+                                  'Tentang Saya',
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
+                                  textAlign:
+                                      TextAlign.center, // Pusatkan teks judul
                                 ),
-                                subtitle: Text('ITB-STIKOM Ambon'),
-                              ),
-                              Divider(), // Garis pemisah
-
-                              // Gender
-                              ListTile(
-                                leading: Icon(
-                                  Icons.person,
-                                  color: Colors.purple,
-                                  size: 30,
-                                ),
-                                title: Text(
-                                  'Gender',
+                                SizedBox(
+                                    height:
+                                        10), // Memberi jarak antara judul dan deskripsi
+                                Text(
+                                  'Saya adalah mahasiswa semester 5 di ITB-STIKOM Ambon, '
+                                  'dengan fokus pada pengembangan keterampilan teknologi informasi dan komunikasi. '
+                                  'Saya memiliki minat yang kuat dalam pengembangan perangkat lunak, '
+                                  'serta berkomitmen untuk meningkatkan keahlian di bidang teknologi modern.',
                                   style: TextStyle(
                                     fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87,
+                                    height: 1.5, // Memberikan spasi antar baris
                                   ),
+                                  textAlign: TextAlign
+                                      .center, // Pusatkan teks deskripsi
                                 ),
-                                subtitle: Text('Perempuan'),
-                              ),
-                              Divider(), // Garis pemisah
-
-                              // Tanggal Lahir
-                              ListTile(
-                                leading: Icon(
-                                  Icons.cake,
-                                  color: Colors.red,
-                                  size: 30,
-                                ),
-                                title: Text(
-                                  'Tanggal Lahir',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                subtitle: Text('31 Oktober 2003'),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
+
                           const SizedBox(height: 20),
                         ],
                       ),

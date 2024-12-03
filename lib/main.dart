@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_application_1/movie_list.dart';
 
 void main() {
   runApp(const MainApp());
@@ -91,6 +92,20 @@ class MyApp extends StatelessWidget {
                   title: const Text('About'),
                   onTap: () {
                     Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(
+                    Icons.movie,
+                    color: Colors.blue,
+                  ),
+                  title: const Text('Movie List'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MovieListPage()),
+                    );
                   },
                 ),
                 ListTile(
